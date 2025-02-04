@@ -2,7 +2,8 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { Routes, Route, BrowserRouter, useLocation, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import video from './../public/CacaoVideo.mp4'; 
+// Remove the video import:
+// import video from './../public/CacaoVideo.mp4'; 
 import Spinner from './components/Spinner/Spinner';
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
@@ -137,7 +138,7 @@ const App = () => {
                     <Suspense fallback={<Spinner />}><Footer /></Suspense>
                     
                   </>
-                  <Suspense fallback={<Spinner />}><VideoPlayer playState={playState} setPlayState={setPlayState} /></Suspense>
+                  <Suspense fallback={<Spinner />}><video src="/CacaoVideo.mp4" autoPlay muted loop controls></video></Suspense>
                   </>
                   
                 )}

@@ -1,7 +1,6 @@
 import React from 'react';
 import './Hero.css';
 import arrow from '../../../assets/arrow.png';
-import videoSource from '../../../../public/CacaoVideo.mp4';
 import { Link } from 'react-scroll';
 
 const Hero = () => {
@@ -9,7 +8,7 @@ const Hero = () => {
     <div className='hero container'>
       {/* Adding the video background */}
       <video autoPlay muted loop className="hero-video">
-        <source src={videoSource} type="video/mp4" />
+        <source src="/CacaoVideo.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       
