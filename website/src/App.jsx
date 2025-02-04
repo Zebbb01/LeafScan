@@ -73,10 +73,9 @@ const App = () => {
       {(location.pathname === '/' || location.pathname === '/signup' || location.pathname.startsWith('/update/') || location.pathname === '/edit-disease') && (
         <>
           <video autoPlay muted loop className="video-background">
-            <source src={video} type="video/mp4" />
+            <source src="/CacaoVideo.mp4" autoPlay muted loop controls />
             Your browser does not support the video tag.
           </video>
-          <div className="overlay"></div>
         </>
       )}
 
@@ -100,7 +99,6 @@ const App = () => {
             element={user ? (
               <div className='App'>
                 {user && (
-                  <>
                   <>
                     <Suspense fallback={<Spinner message="Loading Hero..." />}><Hero /></Suspense>
                     <div className="container">
@@ -136,9 +134,7 @@ const App = () => {
                     <Suspense fallback={<Spinner />}><Title subTitle='Reach Out' title='Contact Us' /></Suspense>
                     <Suspense fallback={<Spinner />}><Contact /></Suspense>
                     <Suspense fallback={<Spinner />}><Footer /></Suspense>
-                    
-                  </>
-                  <Suspense fallback={<Spinner />}><video src="/CacaoVideo.mp4" autoPlay muted loop controls></video></Suspense>
+                    <Suspense fallback={<Spinner />}><VideoPlayer playState={playState} setPlayState={setPlayState} /></Suspense>
                   </>
                   
                 )}
