@@ -73,7 +73,7 @@ const App = () => {
       {(location.pathname === '/' || location.pathname === '/signup' || location.pathname.startsWith('/update/') || location.pathname === '/edit-disease') && (
         <>
           <video autoPlay muted loop className="video-background">
-            <source src="/CacaoVideo.mp4" autoPlay muted loop controls />
+          <source src="/CacaoVideo.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </>
