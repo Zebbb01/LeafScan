@@ -1,0 +1,82 @@
+.chart-container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-radius: 8px;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+}
+
+.chart-container p{
+  width: 65%;
+  margin: 10px auto;
+  text-align: justify;
+  text-indent: 40px;
+  color: #555;
+}
+
+.forecast-chart-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.mae-display {
+  text-align: right;
+  font-size: 12px;
+  color: #333;
+}
+
+.forecast-chart:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.forecast-chart canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.forecast-chart .scatter-point {
+  background-color: #007bff;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.forecast-chart .trend-line {
+  border-color: #17a2b8;
+  border-width: 2px;
+  border-style: dashed;
+}
+
+.forecast-chart .loading {
+  font-size: 1.2em;
+  color: #888;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.forecast-chart .error {
+  color: red;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+/* ----- media queries to become responsive ----- */
+@media (max-width: 1700px){
+ .chart-container p{
+    width: 75%;
+  }
+}
+
+@media (max-width: 1250px){
+  .chart-container p{
+    width: 100%;
+  }
+}

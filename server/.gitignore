@@ -1,0 +1,42 @@
+# Ignore virtual environment
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# SQLite database files
+*.db
+*.sqlite3
+
+# Node modules
+node_modules/
+saved_models/
+
+# Logs and crash reports
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python environment configuration
+*.env
+*.pem
+*.tar
+*.ppk
+
+
+# Ignore package-lock if managed elsewhere
+package-lock.json
+
+# Ignore any saved models
+saved_models/
+.vercel

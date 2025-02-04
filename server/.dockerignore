@@ -1,0 +1,10 @@
+# Ignore unnecessary files
+.git
+__pycache__
+*.pyc
+*.pyo
+*.db
+*.log
+
+# Allow the migrations folder
+!migrations/

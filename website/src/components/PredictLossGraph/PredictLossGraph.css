@@ -1,0 +1,79 @@
+.PredictLossGraph-container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+}
+
+.PredictLossGraph-description {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .PredictLossGraph-description h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  
+  .PredictLossGraph-description p {
+    width: 65%;
+    margin: 10px auto;
+    text-align: justify;
+    text-indent: 40px;
+    color: #555;
+  }
+  
+
+.PredictLossGraph-chart .chart-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+}
+
+.PredictLossGraph-chart canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.bar-chart .loading,
+.bar-chart .error {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.bar-chart .loading {
+    color: #007bff;
+}
+
+.bar-chart .error {
+    color: #ff4d4d;
+    background-color: #ffe6e6;
+}
+
+.refresh-button-container {
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+    .PredictLossGraph-container {
+        flex-direction: column;
+    }
+
+    .PredictLossGraph-description,
+    .PredictLossGraph-chart {
+        width: 100%; /* Allow both sections to take full width */
+    }
+}
