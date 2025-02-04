@@ -2,7 +2,7 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { Routes, Route, BrowserRouter, useLocation, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import video from './public/CacaoVideo.mp4'; 
+import video from './../public/CacaoVideo.mp4'; 
 import Spinner from './components/Spinner/Spinner';
 
 const Navbar = React.lazy(() => import('./components/Navbar/Navbar'));
@@ -12,6 +12,7 @@ const Title = React.lazy(() => import('./components/Title/Title'));
 const About = React.lazy(() => import('./components/About/About'));
 const Contact = React.lazy(() => import('./components/Contact/Contact'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
+const VideoPlayer = React.lazy(() => import('./components/VideoPlayer/VideoPlayer'));
 const SignUp = React.lazy(() => import('./components/SignUp/SignUp'));
 const Login = React.lazy(() => import('./components/Login/Login'));
 const UpdateProfile = React.lazy(() => import('./components/UpdateProfile/UpdateProfile'));
@@ -136,12 +137,7 @@ const App = () => {
                     <Suspense fallback={<Spinner />}><Footer /></Suspense>
                     
                   </>
-                  <Suspense fallback={<Spinner />}>
-                    <video autoPlay muted loop className="video-background">
-                        <source src="/CacaoVideo.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                  </Suspense>
+                  <Suspense fallback={<Spinner />}><VideoPlayer playState={playState} setPlayState={setPlayState} /></Suspense>
                   </>
                   
                 )}

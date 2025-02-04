@@ -1,7 +1,7 @@
 import React from 'react';
 import './Hero.css';
 import arrow from '../../../assets/arrow.png';
-import videoSource from '../../../assets/Cacao farming (360p).mp4';
+import videoSource from '../../../../public/CacaoVideo.mp4';
 import { Link } from 'react-scroll';
 
 const Hero = () => {
