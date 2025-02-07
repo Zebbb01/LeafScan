@@ -20,7 +20,8 @@ export default defineConfig({
       '/api': {
         target: 'https://leaf-scan.com', // Use the Vercel environment variable
         changeOrigin: true,
-        secure: false,
+        secure: true,
+        credentials: "include",
       },
     },
   },
