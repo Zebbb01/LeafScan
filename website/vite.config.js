@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.VITE_API_BASE_URL, // Use the Vercel environment variable
+        target: 'https://leaf-scan.com', // Use the Vercel environment variable
         changeOrigin: true,
         secure: true,
       },
