@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.REACT_APP_API_URL || 'http://13.239.34.210', // Set this environment variable for production
+        target: process.env.VITE_API_BASE_URL, // Use the Vercel environment variable
         changeOrigin: true,
         secure: true,
       },
@@ -26,5 +26,5 @@ export default defineConfig({
   },
   define: {
     'import.meta.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL),
-  },  
+  },
 });
