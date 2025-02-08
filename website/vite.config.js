@@ -1,8 +1,6 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
 export default defineConfig({
   plugins: [react()],
+  base: '/',
   build: {
     rollupOptions: {
       output: {
@@ -13,19 +11,16 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 500,  // Optional: Adjust warning limit
+    chunkSizeWarningLimit: 500,
   },
   server: {
     proxy: {
       '/api': {
-        target: 'https://leaf-scan.com', // Use the Vercel environment variable
+        target: 'https://leaf-scan.com',
         changeOrigin: true,
         secure: true,
         credentials: "include",
       },
     },
-  },
-  define: {
-    'import.meta.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL),
   },
 });
