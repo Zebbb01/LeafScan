@@ -15,18 +15,6 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 500,  // Optional: Adjust warning limit
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://leaf-scan.com',
-        changeOrigin: true,
-        secure: false, // Allow self-signed certs (optional)
-        headers: {
-          Connection: "keep-alive",
-        },
-      },
-    },
-  },  
   define: {
     'import.meta.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL),
   },
