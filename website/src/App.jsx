@@ -110,7 +110,7 @@ const App = () => {
                       <Suspense fallback={<Spinner />}><UploadCsv setIsDataLoaded={setIsDataLoaded} setCsvUploaded={setCsvUploaded} setSeverityChanged={setSeverityChanged} /></Suspense>
                       {isDataLoaded && (
                         <>
-                          <Suspense fallback={<Spinner />}><ReportTable csvUploaded={csvUploaded} severityChanged={severityChanged} setSeverityChanged={setSeverityChanged} /></Suspense>
+                          {/* <Suspense fallback={<Spinner />}><ReportTable csvUploaded={csvUploaded} severityChanged={severityChanged} setSeverityChanged={setSeverityChanged} /></Suspense> */}
                           <div className={`graph-container ${isGraphVisible ? 'show' : ''}`}>
                             {isGraphVisible && (
                               <>
