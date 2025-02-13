@@ -2,8 +2,7 @@ from flask import jsonify
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 from sklearn.metrics import mean_absolute_error
 import pandas as pd
-from models import Production
-from flask import session
+from models import Production, SeveritySetting
 
 from routes.utility import fetch_production_data, time_series_k_fold
 
@@ -25,10 +24,11 @@ def init_forecasting_routes(app):
             production_data = fetch_production_data()
             production_data['date'] = pd.to_datetime(production_data['date'])
             production_data.set_index('date', inplace=True)
-
-            # Fetch the severity value from the session
-            severity_value = session.get('severity', 1)  # Default to severity of 1 if not set
-
+            
+            # Fetch severity from database
+            severity_record = SeveritySetting.query.first()
+            severity_value = severity_record.severity if severity_record else 1
+            
             # Calculate the loss percentage based on the severity value (scaled from 1 to 10)
             total_loss_percentage = severity_value / 100  # Severity of 1 -> 1%, Severity of 10 -> 10%
 
@@ -97,7 +97,10 @@ def init_forecasting_routes(app):
             production_data['date'] = pd.to_datetime(production_data['date'])
             production_data.set_index('date', inplace=True)
 
-            severity_value = session.get('severity', 1)  # Default to severity of 1 if not set
+            # Fetch severity from database
+            severity_record = SeveritySetting.query.first()
+            severity_value = severity_record.severity if severity_record else 1# Default to severity of 1 if not set
+            
             total_loss_percentage = severity_value / 100
 
             model = ExponentialSmoothing(
@@ -153,9 +156,10 @@ def init_forecasting_routes(app):
             if production_data.empty:
                 return jsonify({'error': 'No production data available. Please upload data first.'}), 400
 
-            # Fetch the severity from the session
-            severity_value = session.get('severity', 1)  # Default severity to 1 if not set
-
+            # Fetch severity from database
+            severity_record = SeveritySetting.query.first()
+            severity_value = severity_record.severity if severity_record else 1
+            
             # Adjust loss percentage calculation based on severity
             loss_percentage = severity_value / 100  # Map severity to a percentage (1 -> 1%, 2 -> 2%, etc.)
 
@@ -218,8 +222,10 @@ def init_forecasting_routes(app):
             if len(forecast_values) == 0:
                 return jsonify({'error': 'Forecasting failed. No data available for predictions.'}), 400
 
-            # Adjust values based on severity
-            severity_value = session.get('severity', 1)
+            # Fetch severity from database
+            severity_record = SeveritySetting.query.first()
+            severity_value = severity_record.severity if severity_record else 1
+            
             loss_percentage = severity_value / 100
             adjusted_values = [val * (1 - loss_percentage) for val in forecast_values]
             actual_losses = [val * loss_percentage for val in forecast_values]

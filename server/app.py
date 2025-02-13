@@ -1,5 +1,4 @@
 from flask import Flask, jsonify
-from flask_cors import CORS
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
@@ -31,26 +30,20 @@ app = Flask(__name__)
 # Flask Configurations
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', 'False').lower() == 'true'
-app.config['SQLALCHEMY_ECHO'] = os.getenv('SQLALCHEMY_ECHO', 'True').lower() == 'false'
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', 'False') == 'True'
+app.config['SQLALCHEMY_ECHO'] = os.getenv('SQLALCHEMY_ECHO', 'True') == 'True'
 # Mail configuration
 app.config.update(
-    MAIL_SERVER=os.getenv('MAIL_SERVER'),
+        MAIL_SERVER=os.getenv('MAIL_SERVER'),
     MAIL_PORT=int(os.getenv('MAIL_PORT', 587)),
     MAIL_USERNAME=os.getenv('MAIL_USERNAME'),
     MAIL_PASSWORD=os.getenv('MAIL_PASSWORD'),
-    MAIL_USE_TLS=os.getenv('MAIL_USE_TLS', 'True').lower() == 'false',
+    MAIL_USE_TLS=os.getenv('MAIL_USE_TLS', 'True').lower() == 'true',
     MAIL_DEFAULT_SENDER=os.getenv('MAIL_DEFAULT_SENDER')
 )
 
 mail = Mail(app)
 bcrypt = Bcrypt(app)
-CORS(app, supports_credentials=True, resources={
-    r"/*": {
-        "origins": ["https://leaf-scan-application.vercel.app", "http://localhost:5173"]
-    }
-})
 
 # Initialize PostgreSQL database and migration
 db.init_app(app)

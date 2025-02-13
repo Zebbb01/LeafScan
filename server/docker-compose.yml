@@ -1,43 +1,32 @@
-  services:
-    db:
-      image: postgres:17
-      container_name: postgres-db
-      environment:
-        POSTGRES_USER: ${DB_USER}
-        POSTGRES_PASSWORD: ${DB_PASSWORD}
-        POSTGRES_DB: ${DB_NAME}
-      ports:
-        - "5432:5432"
-      volumes:
-        - postgres_data:/var/lib/postgresql/data
-      healthcheck:
-        test: ["CMD", "pg_isready", "-U", "postgres"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
+version: '3.8'
 
-    app:
-      build: .
-      container_name: leafscan-app
-      environment:
-        SECRET_KEY: ${SECRET_KEY}
-        SQLALCHEMY_DATABASE_URI: ${SQLALCHEMY_DATABASE_URI}
-        MAIL_SERVER: ${MAIL_SERVER}
-        MAIL_PORT: ${MAIL_PORT}
-        MAIL_USERNAME: ${MAIL_USERNAME}
-        MAIL_PASSWORD: ${MAIL_PASSWORD}
-        MAIL_USE_TLS: ${MAIL_USE_TLS}
-        MAIL_DEFAULT_SENDER: ${MAIL_DEFAULT_SENDER}
-        PEPPER: ${PEPPER}
-      ports:
-        - "8080:8080"
-      depends_on:
-        - db
-      command:
-        - sh
-        - -c
-        - |
-          flask db upgrade && gunicorn -b 0.0.0.0:8080 app:app
+services:
+  app:
+    build: .
+    container_name: leafscan-app
+    restart: always
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      SQLALCHEMY_DATABASE_URI: "postgresql://postgres:admin123@leafscan-db.cby4m8qqoaqm.ap-southeast-2.rds.amazonaws.com:5432/leafscan_db"
+      MAIL_SERVER: ${MAIL_SERVER}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_USE_TLS: ${MAIL_USE_TLS}
+      MAIL_DEFAULT_SENDER: ${MAIL_DEFAULT_SENDER}
+      PEPPER: ${PEPPER}
+    ports:
+      - "8080:8080"
+    command:
+      - sh
+      - -c
+      - |
+        flask db upgrade && gunicorn -b 0.0.0.0:8080 app:app
 
-  volumes:
-    postgres_data:
+  seed:
+    build: .
+    container_name: leafscan-seed
+    restart: "no"  # Ensure it doesn't restart
+    depends_on:
+      - app
+    command: ["python3", "seed.py"]

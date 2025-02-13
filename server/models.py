@@ -63,6 +63,15 @@ class Production(db.Model):
     def __repr__(self):
         return f'<Production {self.date} - {self.value}>'
     
+class SeveritySetting(db.Model):
+    __tablename__ = 'severity_setting'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    severity = db.Column(db.Integer, nullable=False, default=1)  # Default value of severity
+
+    def __init__(self, severity):
+        self.severity = severity
+    
 # Disease Info Table    
 class DiseaseInfo(db.Model):
     __tablename__ = "disease_info"
