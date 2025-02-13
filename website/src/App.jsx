@@ -68,6 +68,12 @@ const App = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (severityChanged) {
+      setSeverityChanged(false); // Reset after updating graphs
+    }
+  }, [severityChanged]);
+
   return (
     <>
       {(location.pathname === '/' || location.pathname === '/signup' || location.pathname.startsWith('/update/') || location.pathname === '/edit-disease') && (
