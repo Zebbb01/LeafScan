@@ -42,7 +42,7 @@ const ForecastLossGraph = () => {
           }
           const data = await response.json();
       
-          const forecastResponse = await fetch('/api/forecast-losses');
+          const forecastResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/forecast-losses`);
           if (!forecastResponse.ok) {
             const text = await forecastResponse.text();
             throw new Error(`Failed to fetch forecast data: ${text}`);
@@ -73,6 +73,7 @@ const ForecastLossGraph = () => {
         } catch (err) {
           setError(err.message);
           console.error(err);
+          console.log("Chart Data:", chartData);
         } finally {
           setLoading(false);
         }

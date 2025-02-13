@@ -44,12 +44,13 @@ const ForecastDamage = ({ isDataLoaded }) => {
     setError(null);
   
     try {
-      const response = await fetch('/api/forecast-losses');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/forecast-losses`);
       if (!response.ok) {
         const text = await response.text();
         throw new Error(`Failed to fetch forecast data: ${text}`);
       }
       const data = await response.json();
+      console.log("Forecast API Response:", data); // Debugging log
       setForecastDetails(data);
   
       const forecastLabels = data.forecast_dates.map(convertToQuarterlyFormat);
@@ -121,7 +122,8 @@ const ForecastDamage = ({ isDataLoaded }) => {
       });
     } catch (err) {
       setError(err.message);
-      console.error(err);
+      console.error("Forecast Fetch Error:", err);
+      console.log("Chart Data:", chartData);
     } finally {
       setLoading(false);
     }
