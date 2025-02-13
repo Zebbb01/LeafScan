@@ -120,10 +120,10 @@ const App = () => {
                           <div className={`graph-container ${isGraphVisible ? 'show' : ''}`}>
                             {isGraphVisible && (
                               <>
-                                <Suspense fallback={<Spinner />}><ForecastDamage isDataLoaded={isDataLoaded} /></Suspense>
+                                <Suspense fallback={<Spinner />}><ForecastDamage isDataLoaded={isDataLoaded} severityChanged={severityChanged} /></Suspense>
                                 <Suspense fallback={<Spinner />}><ForecastLossGraph severityChanged={severityChanged} /></Suspense>
-                                <Suspense fallback={<Spinner />}><LossGraph /></Suspense>
-                                <Suspense fallback={<Spinner />}><PredictLossGraph /></Suspense>
+                                <Suspense fallback={<Spinner />}><LossGraph severityChanged={severityChanged} /></Suspense>
+                                <Suspense fallback={<Spinner />}><PredictLossGraph severityChanged={severityChanged} /></Suspense>
                               </>
                             )}
                           </div>

@@ -14,7 +14,7 @@ import './PredictLossGraph.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const PredictLossGraph = () => {
+const PredictLossGraph = ({ severityChanged }) => {
     const [chartData, setChartData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -64,7 +64,7 @@ const PredictLossGraph = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [severityChanged]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -77,7 +77,7 @@ const PredictLossGraph = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [severityChanged]);
 
     // Helper function to get severity level
     const getSeverityLevel = (severityRange) => {

@@ -15,7 +15,7 @@ import './LossGraph.css'; // Reuse BarGraph's CSS
 // Register necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const LossGraph = () => {
+const LossGraph = ({ severityChanged }) => {
     const [chartData, setChartData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -102,7 +102,7 @@ const LossGraph = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [severityChanged]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -115,7 +115,7 @@ const LossGraph = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [severityChanged]);
 
     const handleStartQuarterChange = (event) => {
         setStartQuarter(event.target.value);
