@@ -160,22 +160,32 @@ const ReportTable = ({ csvUploaded, severityChanged, setSeverityChanged }) => {
 
     const { severity_label, severity_value, loss_percentage, data, next_8_quarters_forecast, adjusted_production, actual_losses } = reportData;
 
-    const lastDate = data[data.length - 1].date;
-    const startDate = new Date(lastDate);
-    if (startDate.getMonth() === 0) {
-        startDate.setFullYear(startDate.getFullYear());
-        startDate.setMonth(3);
+    const lastDate = data.length > 0 ? data[data.length - 1].date : null;
+    const startDate = lastDate ? new Date(lastDate) : new Date(); // Use current date as fallback
+    
+    if (isNaN(startDate.getTime())) {
+        console.error("Invalid lastDate:", lastDate);
     } else {
-        startDate.setMonth(startDate.getMonth() + 3);
+        if (startDate.getMonth() === 0) {
+            startDate.setFullYear(startDate.getFullYear());
+            startDate.setMonth(3);
+        } else {
+            startDate.setMonth(startDate.getMonth() + 3);
+        }
     }
+    
 
     const forecastDates = [];
     for (let i = 0; i < 8; i++) {
         const forecastDate = new Date(startDate);
-        forecastDate.setMonth(forecastDate.getMonth() + i * 3);
-        const formattedDate = forecastDate.toISOString().split('T')[0];
-        forecastDates.push(formattedDate);
+        if (!isNaN(forecastDate.getTime())) {
+            forecastDate.setMonth(forecastDate.getMonth() + i * 3);
+            forecastDates.push(forecastDate.toISOString().split('T')[0]);
+        } else {
+            console.error("Invalid forecast date:", forecastDate);
+        }
     }
+    
 
     return (
         <>
