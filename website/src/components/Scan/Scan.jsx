@@ -300,7 +300,9 @@ const Scan = () => {
               ) : (
                 <>
                   <p><strong>Disease:</strong> {disease || 'N/A'}</p>
-                  <p><strong>Accuracy:</strong> {confidence ? `${confidence}%` : 'N/A'}</p>
+                  {disease && disease !== 'N/A' && (
+                    <p><strong>Accuracy:</strong> {confidence ? `${confidence}%` : 'N/A'}</p>
+                  )}
                 </>
               )}
             </div>
