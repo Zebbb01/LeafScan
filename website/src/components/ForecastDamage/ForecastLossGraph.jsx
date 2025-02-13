@@ -14,7 +14,7 @@ import './ForecastLossGraph.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const ForecastLossGraph = () => {
+const ForecastLossGraph = ({ severityChanged }) => {
     const [chartData, setChartData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -85,7 +85,7 @@ const ForecastLossGraph = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [severityChanged]);
 
     if (loading) return <Spinner />;
     if (error) return <div>Error: {error}</div>;

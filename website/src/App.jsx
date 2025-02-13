@@ -115,7 +115,7 @@ const App = () => {
                             {isGraphVisible && (
                               <>
                                 <Suspense fallback={<Spinner />}><ForecastDamage isDataLoaded={isDataLoaded} /></Suspense>
-                                <Suspense fallback={<Spinner />}><ForecastLossGraph /></Suspense>
+                                <Suspense fallback={<Spinner />}><ForecastLossGraph severityChanged={severityChanged} /></Suspense>
                                 <Suspense fallback={<Spinner />}><LossGraph /></Suspense>
                                 <Suspense fallback={<Spinner />}><PredictLossGraph /></Suspense>
                               </>

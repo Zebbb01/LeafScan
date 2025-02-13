@@ -49,6 +49,9 @@ const UploadCsv = ({ setIsDataLoaded, setCsvUploaded, setSeverityChanged }) => {
         }
 
         setLoading(true);
+        localStorage.setItem('severity', severity); // Ensure severity is saved before upload
+        setSeverityChanged(true); // Notify the parent
+        
         const formData = new FormData();
         formData.append('file', file);
         formData.append('severity', severity);
