@@ -3,7 +3,7 @@ import { Line } from 'react-chartjs-2';
 import './ForecastDamage.css';
 import Spinner from '../Spinner/SpinnerSticky';
 
-const ForecastDamage = ({ isDataLoaded }) => {
+const ForecastDamage = ({ isDataLoaded, severityChanged }) => {
   const [chartData, setChartData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -132,11 +132,11 @@ const ForecastDamage = ({ isDataLoaded }) => {
 
   useEffect(() => {
     if (isDataLoaded) fetchRawData();
-  }, [isDataLoaded]);
+  }, [isDataLoaded, severityChanged]);
 
   useEffect(() => {
     if (rawProductionData) fetchForecastData();
-  }, [rawProductionData]);
+  }, [rawProductionData, severityChanged]);
 
   const applyFilters = () => {
     // Extract production data from forecastDetails
