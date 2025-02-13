@@ -45,7 +45,10 @@ const ForecastDamage = ({ isDataLoaded }) => {
   
     try {
       const response = await fetch('/api/forecast-losses');
-      if (!response.ok) throw new Error('Failed to fetch forecast data');
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Failed to fetch forecast data: ${text}`);
+      }
       const data = await response.json();
       setForecastDetails(data);
   
@@ -118,6 +121,7 @@ const ForecastDamage = ({ isDataLoaded }) => {
       });
     } catch (err) {
       setError(err.message);
+      console.error(err);
     } finally {
       setLoading(false);
     }

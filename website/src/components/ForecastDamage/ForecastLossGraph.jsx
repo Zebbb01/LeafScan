@@ -35,41 +35,48 @@ const ForecastLossGraph = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/bar-forecast-losses`);
-            const data = await response.json();
-
-            if (!response.ok) throw new Error(data.error || 'Failed to fetch data');
-
-            const forecastResponse = await fetch('/api/forecast-losses');
-            const forecastData = await forecastResponse.json();
-            setForecastDetails(forecastData);
-
-            setChartData({
-                labels: formatDatesToQuarters(data.forecast_dates),
-                datasets: [
-                    {
-                        label: 'Expected Production',
-                        data: data.expected_production,
-                        backgroundColor: '#F1C232',
-                    },
-                    {
-                        label: 'Adjusted Production',
-                        data: data.adjusted_production,
-                        backgroundColor: '#34A853',
-                    },
-                    {
-                        label: 'Loss Production Impact',
-                        data: data.loss_production_impact,
-                        backgroundColor: '#EA4335',
-                    },
-                ],
-            });
+          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/bar-forecast-losses`);
+          if (!response.ok) {
+            const text = await response.text();
+            throw new Error(`Failed to fetch data: ${text}`);
+          }
+          const data = await response.json();
+      
+          const forecastResponse = await fetch('/api/forecast-losses');
+          if (!forecastResponse.ok) {
+            const text = await forecastResponse.text();
+            throw new Error(`Failed to fetch forecast data: ${text}`);
+          }
+          const forecastData = await forecastResponse.json();
+          setForecastDetails(forecastData);
+      
+          setChartData({
+            labels: formatDatesToQuarters(data.forecast_dates),
+            datasets: [
+              {
+                label: 'Expected Production',
+                data: data.expected_production,
+                backgroundColor: '#F1C232',
+              },
+              {
+                label: 'Adjusted Production',
+                data: data.adjusted_production,
+                backgroundColor: '#34A853',
+              },
+              {
+                label: 'Loss Production Impact',
+                data: data.loss_production_impact,
+                backgroundColor: '#EA4335',
+              },
+            ],
+          });
         } catch (err) {
-            setError(err.message);
+          setError(err.message);
+          console.error(err);
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
+      };
 
     const handleRefresh = () => {
         fetchData();
