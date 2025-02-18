@@ -24,6 +24,7 @@ const Scan = () => {
   const [showErrorModal, setShowErrorModal] = useState(false); // State for the error modal
   const [errorMessage, setErrorMessage] = useState(""); // State for the error message
   const [showActualNumbers, setShowActualNumbers] = useState(false); // State to toggle between actual numbers and "Many"
+  const [selectedFile, setSelectedFile] = useState(null);
 
 
   const threshold = 1000;
@@ -89,64 +90,64 @@ const Scan = () => {
 
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
-    
-      if (!file) return;
-    
-      // Validate file type
-      if (!["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
-        setErrorMessage("Please upload a valid image file (JPEG, JPG, or PNG).");
+      if (file && (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg')) {
+        setSelectedFile(file); // Store the file for later use
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImage(reader.result);
+          setDisease(null);
+          setConfidence(null);
+          setPrevention(null);
+          setCause(null);
+          setContributingFactors(null);
+          setMoreInfoUrl(null);
+          setScanned(false);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        setErrorMessage('Please upload a valid image file (JPEG, JPG, or PNG).');
         setShowErrorModal(true);
-        return;
       }
-    
-      // Validate file size
-      if (file.size > MAX_FILE_SIZE) {
-        setErrorMessage(`File size exceeds limit (max: ${MAX_FILE_SIZE / (1024 * 1024)}MB).`);
-        setShowErrorModal(true);
-        return;
-      }
-    
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-        setDisease(null);
-        setConfidence(null);
-        setPrevention(null);
-        setCause(null);
-        setContributingFactors(null);
-        setMoreInfoUrl(null);
-        setScanned(false);
-      };
-      reader.readAsDataURL(file);
     };
+    
 
   const handleCloseErrorModal = () => {
     setShowErrorModal(false);
   };
 
   const handleScan = async () => {
-    if (!image) return;
-
+    if (!selectedFile) return; // Ensure a file is selected
+  
     setLoading(true);
-
+  
+    // Validate file type
+    if (!["image/jpeg", "image/png", "image/jpg"].includes(selectedFile.type)) {
+      setErrorMessage("Please upload a valid image file (JPEG, JPG, or PNG).");
+      setShowErrorModal(true);
+      return;
+    }
+  
+    // Validate file size
+    if (selectedFile.size > MAX_FILE_SIZE) {
+      setErrorMessage(`File size exceeds limit (max: ${MAX_FILE_SIZE / (1024 * 1024)}MB).`);
+      setShowErrorModal(true);
+      return;
+    }
+  
     try {
-      const response = await fetch(image);
-      const blob = await response.blob();
       const formData = new FormData();
-      formData.append('image', blob, 'image.jpg');
-
+      formData.append('image', selectedFile);
+  
       const uploadResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/upload_image`, {
         method: 'POST',
         body: formData,
-        headers: {
-          'Accept': 'application/json',
-        },
+        headers: { 'Accept': 'application/json' },
       });
-
+  
       if (!uploadResponse.ok) {
         throw new Error(`HTTP error! Status: ${uploadResponse.status}`);
       }
-
+  
       const data = await uploadResponse.json();
       setDisease(data.disease);
       setConfidence(data.confidence ? (data.confidence * 1).toFixed(2) : null);
@@ -155,7 +156,7 @@ const Scan = () => {
       setContributingFactors(data.contributing_factors);
       setMoreInfoUrl(data.more_info_url);
       setScanned(true);
-
+  
       await fetchScanCounts();
       await fetchDiseaseCounts();
     } catch (error) {
@@ -164,6 +165,7 @@ const Scan = () => {
       setLoading(false);
     }
   };
+  
 
   const handleCancel = () => {
     setShowCancelConfirm(true);
