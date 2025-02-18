@@ -26,6 +26,7 @@ const Scan = () => {
   const [showActualNumbers, setShowActualNumbers] = useState(false); // State to toggle between actual numbers and "Many"
 
   const threshold = 1000;
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
   // Fetch the scan counts from the server
   const fetchScanCounts = async () => {
@@ -117,6 +118,35 @@ const Scan = () => {
 
     setLoading(true);
 
+    if (!file) return;
+
+    // Validate file type
+    if (!["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
+      setErrorMessage("Please upload a valid image file (JPEG, JPG, or PNG).");
+      setShowErrorModal(true);
+      return;
+    }
+  
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      setErrorMessage(`File size exceeds limit (max: ${MAX_FILE_SIZE / (1024 * 1024)}MB).`);
+      setShowErrorModal(true);
+      return;
+    }
+  
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+      setDisease(null);
+      setConfidence(null);
+      setPrevention(null);
+      setCause(null);
+      setContributingFactors(null);
+      setMoreInfoUrl(null);
+      setScanned(false);
+    };
+    reader.readAsDataURL(file);
+  
     try {
       const response = await fetch(image);
       const blob = await response.blob();
