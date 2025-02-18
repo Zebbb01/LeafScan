@@ -34,7 +34,7 @@ export default function VerifyAccountScreen() {
 
   const handleSubmit = () => {
     const verificationCode = code.join('');
-    axios.post(`${SERVER_URI}/api/verify_account`, {
+    axios.post(`${SERVER_URI}/verify_account`, {
       email: email,
       code: verificationCode,
     })

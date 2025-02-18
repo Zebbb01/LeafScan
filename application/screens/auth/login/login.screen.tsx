@@ -100,12 +100,12 @@ export default function LoginScreen() {
       Toast.show("Email cannot be empty!", { type: "danger" });
       return;
     }
-
+  
     if (!userInfo.password) {
       Toast.show("Password cannot be empty!", { type: "danger" });
       return;
     }
-
+  
     if (error.email) {
       Toast.show("Email address not found.", { type: "danger" });
       return;
@@ -114,29 +114,21 @@ export default function LoginScreen() {
       Toast.show("Wrong password", { type: "danger" });
       return;
     }
-
+  
     if (error.email || error.password) {
       Toast.show("Please fix the errors before submitting.", { type: "danger" });
       return;
     }
-
+  
     setButtonSpinner(true);
-
+  
     axios
-      .post(`${SERVER_URI}/api/token`, userInfo)
+      .post(`${SERVER_URI}/token`, userInfo)
       .then((response) => {
-        const userData = response.data;
-        if (!userData.is_verified) {
-          Toast.show("Please verify your account.", { type: "warning" });
-          router.push({
-            pathname: "/(routes)/verifyAccount",
-            params: { userId: userData.id, email: userInfo.email },
-          });
-        } else {
-          setUser(userData);
-          Toast.show("Login successful.", { type: "success" });
-          router.push("/(routes)/camera"); // Navigate to dashboard or home screen after login
-        }
+        const userData = response.data.user; // ✅ Extract only the user object
+        setUser(userData);
+        Toast.show("Login successful.", { type: "success" });
+        router.push("/(routes)/camera"); // Navigate to the main screen
       })
       .catch((error) => {
         setButtonSpinner(false);
@@ -145,24 +137,19 @@ export default function LoginScreen() {
             Toast.show("Wrong Password. Please try again.", { type: "danger" });
           } else if (error.response.data.error === "Email not exist") {
             Toast.show("Email does not exist. Please check your email.", { type: "danger" });
-          } else if (error.response.data.error === "Account not verified") {
-            const userData = error.response.data.user; // Adjust according to the response format
-            router.push({
-              pathname: "/(routes)/verifyAccount",
-              params: { userId: userData.id, email: userInfo.email },
-            });
           } else {
             Toast.show("An error occurred. Please try again.", { type: "danger" });
           }
         } else {
           Toast.show("An error occurred. Please try again.", { type: "danger" });
         }
-        console.error("Error during login:", error, { type: "danger" });
+        console.error("Error during login:", error);
       })
       .finally(() => {
         setButtonSpinner(false);
       });
   };
+  
 
   return (
     <LinearGradient

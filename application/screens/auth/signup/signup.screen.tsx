@@ -132,7 +132,7 @@ export default function SignUpScreen() {
   
     setButtonSpinner(true);
     axios
-      .post(`${SERVER_URI}/api/create_token`, {
+      .post(`${SERVER_URI}/create_token`, {
         name: userInfo.name,
         email: userInfo.email,
         password: userInfo.password,

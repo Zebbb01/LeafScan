@@ -46,7 +46,7 @@ export default function ForgotPasswordScreen() {
     }
 
     axios
-      .post(`${SERVER_URI}/api/forgot_password`, { email })
+      .post(`${SERVER_URI}/forgot_password`, { email })
       .then(() => {
         Toast.show("A new password has been sent to your email.", {
           type: "success",

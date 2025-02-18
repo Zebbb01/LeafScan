@@ -1,0 +1,30 @@
+# Ignore node_modules (EAS automatically reinstalls dependencies)
+node_modules/
+
+# Ignore build and cache folders
+.expo/
+.expo-shared/
+build/
+dist/
+.next/
+.cache/
+
+# Ignore Git-related files
+.git/
+.gitignore
+
+# Ignore environment files and sensitive files
+*.pem
+*.ppk
+.env
+.env.*
+
+# Ignore large files that are not part of the project
+*.tar
+*.zip
+*.rar
+*.log
+
+# Exclude backend/server folders if not required for the mobile app
+server/
+website/

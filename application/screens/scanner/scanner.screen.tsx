@@ -13,6 +13,7 @@ import {
 import { useRoute } from "@react-navigation/native";
 import axios, { CancelTokenSource } from "axios";
 import * as FileSystem from "expo-file-system";
+import * as ImageManipulator from "expo-image-manipulator";
 import { useUser } from "../../context/UserProvider";
 import { SERVER_URI } from "@/utils/uri";
 import { useRouter } from "expo-router";
@@ -38,58 +39,70 @@ export default function ScannerScreen() {
 
   const cancelTokenSource = useRef<CancelTokenSource | null>(null);
 
-  const scanImage = async () => {
-    if (!user) {
-      Alert.alert("Error", "User not found.");
-      return;
-    }
-
-    cancelTokenSource.current = axios.CancelToken.source();
-
-    try {
-      setLoading(true); // Start loading
-      const fileName = `image_${Date.now()}.jpg`;
-      const newPath = `${FileSystem.documentDirectory}${fileName}`;
-      await FileSystem.copyAsync({ from: imageUri, to: newPath });
-
-      const formData = new FormData();
-      formData.append("image", {
-        uri: newPath,
-        name: fileName,
-        type: "image/jpeg",  // Ensure type is correct
-      } as any);
-      
-
-      const response = await axios.post(
-        `${SERVER_URI}/api/upload_image`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          cancelToken: cancelTokenSource.current.token,
-        }
-      );
-
-      if (response.status === 201) {
-        const { disease, confidence, prevention,  cause, contributing_factors, more_info_url } = response.data;
-        setScanResult({ disease, confidence, prevention, cause, contributing_factors, more_info_url });
-        setModalVisible(true);
-      } else {
-        console.error("Failed to scan image, server returned:", response.status);
-      }
-      } catch (error) {
-      if (axios.isCancel(error)) {
-        console.log("Scan request canceled");
-      } else {
-        console.error("Error scanning image:", error);
-        Alert.alert("Error", "Failed to scan image.");
-      }
-    } finally {
-      setLoading(false); // Stop loading when the process is complete
-    }
+  const resizeImage = async (uri: string) => {
+    const result = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 800 } }], // Reduce width (height auto-adjusts)
+      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+    );
+    return result.uri;
   };
 
+  const scanImage = async () => {
+    try {
+      setLoading(true);
+  
+      // Resize Image
+      const resizedUri = await resizeImage(imageUri);
+      console.log("📸 Resized Image URI:", resizedUri);
+  
+      const fileInfo = await FileSystem.getInfoAsync(resizedUri);
+      if (!fileInfo.exists) {
+        console.error("❌ Resized file does not exist:", resizedUri);
+        Alert.alert("Error", "File does not exist.");
+        return;
+      }
+  
+      // Convert to FormData
+      const formData = new FormData();
+      formData.append("image", {
+        uri: resizedUri,
+        name: "image.jpg",
+        type: "image/jpeg",
+      } as any);
+  
+      console.log("🚀 Uploading to:", `${SERVER_URI}/upload_image`);
+  
+      const apiResponse = await axios.post(`${SERVER_URI}/upload_image`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+      });
+  
+      console.log("✅ API Response Status:", apiResponse.status);
+      console.log("✅ API Response Data:", apiResponse.data);
+  
+      if (apiResponse.status === 201) {
+        const responseData = apiResponse.data;
+        setScanResult(responseData);
+        setModalVisible(true);
+      } else {
+        console.error("❌ Server responded with:", apiResponse.status, apiResponse.data);
+        Alert.alert("Error", "Failed to scan image.");
+      }
+    } catch (error: any) {
+      console.error("❌ Error scanning image:", error);
+      if (error.response) {
+        console.error("❌ Server Response:", error.response.data);
+      }
+      Alert.alert("Error", "Failed to scan image.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  
   const handleCancel = () => {
     if (cancelTokenSource.current) {
       cancelTokenSource.current.cancel();
@@ -216,13 +229,14 @@ export default function ScannerScreen() {
                       <Text style={styles.modalLabel}>Disease:</Text>
                       <Text style={styles.modalText}>{scanResult.disease}</Text>
                     </View>
-                    <View style={styles.column}>
-                      <Text style={styles.modalLabel}>Accuracy:</Text>
-                      <Text style={styles.modalText}>
-                        {(scanResult.confidence * 1).toFixed(2)}%
-                      </Text>
-                  </View>
-
+                    {scanResult.disease !== "Unrecognize" && scanResult.disease !== "N/A" && (
+                      <View style={styles.column}>
+                        <Text style={styles.modalLabel}>Accuracy:</Text>
+                        <Text style={styles.modalText}>
+                          {(scanResult.confidence * 1).toFixed(2)}%
+                        </Text>
+                      </View>
+                    )}
                   </View>
                   <View style={styles.description}>
                     <Text style={styles.modalLabel}>Cause:</Text>

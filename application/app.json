@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "client",
+    "name": "LeafScan",
     "slug": "client",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,7 +24,13 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "RECORD_AUDIO"]
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.zebbb.client"
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +39,19 @@
     },
     "plugins": [
       "expo-router",
-      "expo-camera"
+      "expo-camera",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "28bdc350-880d-4744-b19c-071e2c091bdb"
+      }
     }
   }
 }

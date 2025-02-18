@@ -112,7 +112,7 @@ const EditProfileScreen = () => {
       // If password is being changed, verify current password
       if (isPasswordChanged) {
         const passwordCheckResponse = await axios.post(
-          `${SERVER_URI}/api/check-password`,
+          `${SERVER_URI}/check-password`,
           { id: user.id, password: userInfo.currentPassword }
         );
   
@@ -125,7 +125,7 @@ const EditProfileScreen = () => {
       }
   
       // Proceed with the update
-      const response = await axios.put(`${SERVER_URI}/api/update/${user.id}`, {
+      const response = await axios.put(`${SERVER_URI}/update/${user.id}`, {
         name: userInfo.name,
         password: isPasswordChanged ? userInfo.newPassword : undefined,
       });
