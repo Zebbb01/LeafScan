@@ -111,10 +111,20 @@ const Scan = () => {
     };
     
 
-  const handleCloseErrorModal = () => {
-    setShowErrorModal(false);
-  };
-
+    const handleCloseErrorModal = () => {
+      setShowErrorModal(false);
+    };
+    
+    useEffect(() => {
+      if (showErrorModal) {
+        const timer = setTimeout(() => {
+          setShowErrorModal(false);
+        }, 5000); // Auto-close after 5 seconds
+    
+        return () => clearTimeout(timer);
+      }
+    }, [showErrorModal]);
+    
   const handleScan = async () => {
     if (!selectedFile) return; // Ensure a file is selected
   
