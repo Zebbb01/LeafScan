@@ -90,25 +90,37 @@ const Scan = () => {
 
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
-      if (file && (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg')) {
-        setSelectedFile(file); // Store the file for later use
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImage(reader.result);
-          setDisease(null);
-          setConfidence(null);
-          setPrevention(null);
-          setCause(null);
-          setContributingFactors(null);
-          setMoreInfoUrl(null);
-          setScanned(false);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        setErrorMessage('Please upload a valid image file (JPEG, JPG, or PNG).');
+    
+      if (!file) return;
+    
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        setErrorMessage(`File size exceeds limit (max: ${MAX_FILE_SIZE / (1024 * 1024)}MB). Please choose a smaller file.`);
         setShowErrorModal(true);
+        return;
       }
-    };
+    
+      // Validate file type
+      if (!["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
+        setErrorMessage("Please upload a valid image file (JPEG, JPG, or PNG).");
+        setShowErrorModal(true);
+        return;
+      }
+    
+      setSelectedFile(file); // Store the file for later use
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+        setDisease(null);
+        setConfidence(null);
+        setPrevention(null);
+        setCause(null);
+        setContributingFactors(null);
+        setMoreInfoUrl(null);
+        setScanned(false);
+      };
+      reader.readAsDataURL(file);
+    };    
     
 
     const handleCloseErrorModal = () => {
