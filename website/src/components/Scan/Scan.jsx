@@ -28,7 +28,7 @@ const Scan = () => {
 
 
   const threshold = 1000;
-  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+  const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 
   // Fetch the scan counts from the server
   const fetchScanCounts = async () => {
@@ -347,7 +347,7 @@ const Scan = () => {
             <label htmlFor="fileUpload" className="upload-label">
               Drag and drop an image or <span className="browse-link">browse</span> to upload.
             </label>
-            <p className="file-requirements">JPEG, JPG, or PNG up to 40MB</p>
+            <p className="file-requirements">JPEG, JPG, or PNG up to 1MB</p>
             <button className="btn" onClick={() => document.getElementById('fileUpload').click()}>Upload Photo</button>
           </div>
         )}
