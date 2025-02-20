@@ -17,7 +17,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
+    setErrors({}); // Clear previous errors before validation
 
     if (!email.trim()) {
       setErrors({ email: "Email is required." });
@@ -68,10 +68,14 @@ const ForgotPassword = () => {
             />
             {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
+
+          {/* Displaying Spinner or Text based on loading state */}
           <button type="submit" className="fp-btn" disabled={loading}>
-            {loading ? <Spinner /> : 'Send Reset Link'}
+            {loading ? 'Sending...' : 'Send Reset Link'}
           </button>
         </form>
+        {loading && <div className="spinner-container"><Spinner /></div>}
+        
         <Link to="/" className="back-link">Back to Login</Link>
       </div>
     </div>
