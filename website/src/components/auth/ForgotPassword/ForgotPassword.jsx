@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { toast, Zoom } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate for programmatic navigation
 import './ForgotPassword.css'; // Import the new CSS file
 import Spinner from '../../Spinner/Spinner';
 
@@ -9,6 +9,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();  // Initialize navigate
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,22 +19,22 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({}); // Clear previous errors before validation
-  
+
     if (!email.trim()) {
       setErrors({ email: "Email is required." });
       return;
     }
-  
+
     if (!validateEmail(email)) {
       setErrors({ email: "Invalid email format." });
       return;
     }
-  
+
     setLoading(true);
-  
+
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/forgot_password`, { email });
-  
+
       // Ensure that the backend returns the expected success status
       if (response.data && response.data.status === 'success') {
         toast.success('Reset link sent to your email!', {
@@ -41,8 +42,13 @@ const ForgotPassword = () => {
           autoClose: 2000,
           transition: Zoom,
         });
+
+        // Redirect to login page after success
+        setTimeout(() => {
+          navigate('/');  // Redirect to the login page
+        }, 2500);  // Wait for the toast message to display before redirecting
       } else {
-        // Ensure we're correctly handling any non-success responses
+        // Handle any non-success responses
         toast.error(response.data?.error || 'Something went wrong.');
       }
     } catch (error) {
@@ -53,7 +59,6 @@ const ForgotPassword = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="forgot-password-container">
