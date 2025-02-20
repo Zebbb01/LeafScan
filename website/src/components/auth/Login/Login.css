@@ -94,7 +94,7 @@
     color: #016A70;
 }
 .forgot-password {
-    text-align: center; /* Center the link */
+    text-align: right; /* Center the link */
     margin-top: 15px; /* Space it a bit from the input fields */
 }
 
@@ -107,13 +107,9 @@
 }
 
 .forgot-password a:hover {
-    color: #27ae60; /* Change to a dark green color on hover */
+    text-decoration: underline;
 }
 
-.forgot-password a:focus {
-    outline: none; /* Remove the default focus outline */
-    color: #27ae60; /* Same color as hover for focused state */
-}
 
 
 /* Media queries for responsiveness */

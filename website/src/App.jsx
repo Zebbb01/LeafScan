@@ -54,22 +54,14 @@ const App = () => {
     }
   }, []);
 
-useEffect(() => {
-  const hiddenNavbarRoutes = [
-    '/', 
-    '/signup', 
-    '/edit-disease', 
-    '/forgot-password', 
-    ...location.pathname.startsWith('/update/') ? ['/update/'] : []
-  ];
-  
-  if (hiddenNavbarRoutes.some(route => location.pathname === route || location.pathname.startsWith(route))) {
-    document.body.classList.add('authBackground');
-  } else {
-    document.body.classList.remove('authBackground');
-  }
-}, [location.pathname]);
-
+  useEffect(() => {
+    const hiddenNavbarRoutes = ['/', '/signup', '/forgot-password',location.pathname.startsWith('/update/','/edit-disease')];
+    if (hiddenNavbarRoutes.some(route => location.pathname === route)) {
+      document.body.classList.add('authBackground');
+    } else {
+      document.body.classList.remove('authBackground');
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     if (user) {
