@@ -68,7 +68,7 @@ const ForgotPassword = () => {
             />
             {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
-          <button type="submit" className="btn" disabled={loading}>
+          <button type="submit" className="fp-btn" disabled={loading}>
             {loading ? <Spinner /> : 'Send Reset Link'}
           </button>
         </form>
