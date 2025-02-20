@@ -7,8 +7,8 @@ import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../assets/logo.png';
-import Spinner from '../Spinner/Spinner';
+import logo from '../../../assets/logo.png';
+import Spinner from '../../Spinner/Spinner';
 
 const SignUp = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast, Zoom } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import './ForgotPassword.css'; // Import the new CSS file
-import Spinner from '../../Spinner/Spinner';
+import Spinner from '../../../Spinner/Spinner';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
