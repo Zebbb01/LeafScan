@@ -78,7 +78,7 @@ const App = () => {
 
   return (
     <>
-      {(location.pathname === '/' || location.pathname === '/signup' || location.pathname.startsWith('/update/') || location.pathname === '/edit-disease') && (
+      {(location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/forgot-password' || location.pathname.startsWith('/update/') || location.pathname === '/edit-disease') && (
         <>
           <video autoPlay muted loop className="video-background">
           <source src="/CacaoVideo.mp4" type="video/mp4" />
