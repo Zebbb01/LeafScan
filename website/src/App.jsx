@@ -54,9 +54,10 @@ const App = () => {
     }
   }, []);
 
+  // Hide navbar for login, signup, and forgot-password paths
   useEffect(() => {
-    const hiddenNavbarRoutes = ['/', '/signup', location.pathname.startsWith('/update/','/edit-disease')];
-    if (hiddenNavbarRoutes.some(route => location.pathname === route)) {
+    const hiddenNavbarPaths = ['/login', '/signup', '/forgot-password'];
+    if (hiddenNavbarPaths.includes(location.pathname)) {
       document.body.classList.add('authBackground');
     } else {
       document.body.classList.remove('authBackground');

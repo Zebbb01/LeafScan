@@ -81,7 +81,7 @@ const Navbar = ({ user, onLogout }) => {
   };
 
   // Hide navigation links if on Login or Sign Up page
-  const showNavLinks = !(location.pathname === '/' || location.pathname === '/signup');
+  const showNavLinks = !(location.pathname === '/' || location.pathname === '/signup' || location.pathname === '/forgot-password');
 
   return (
     <nav className={`container ${sticky ? 'dark-nav' : ''} ${!showNavLinks ? 'full-opacity-nav' : ''}`}>
@@ -102,7 +102,7 @@ const Navbar = ({ user, onLogout }) => {
             <button
               type='button'
               className='btn btn-danger dropdown-toggle'
-              onClick={toggleDropdown}
+                  onClick={toggleDropdown}
             >
               {user.name} <span className="dropdown-icon"> 
                 <img src={profile_icon} alt="profile_icon" className='profile_icon' /> </span>
@@ -126,7 +126,7 @@ const Navbar = ({ user, onLogout }) => {
             </Link>
               </li>
               <li><a className="dropdown-item" onClick={handleLogout}>Logout</a></li>
-            </ul>
+                  </ul>
           </li>
         ) : (
           // Conditionally render Sign Up or Login based on the current page
