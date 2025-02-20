@@ -5,8 +5,8 @@ import SpinnerScan from "../Spinner/SpinnerScan";
 
 const Scan = () => {
   const [totalScans, setTotalScans] = useState(0);
-  const [userTotalScans, setUserTotalScans] = useState(0);
-  const [scansToday, setScansToday] = useState(0);
+  // const [userTotalScans, setUserTotalScans] = useState(0);
+  // const [scansToday, setScansToday] = useState(0);
   const [image, setImage] = useState(null);
   const [disease, setDisease] = useState(null);
   const [confidence, setConfidence] = useState(null);
@@ -278,7 +278,7 @@ const Scan = () => {
               </p>
             </div>
           </div>
-          <div className="scan-info-box">
+          {/* <div className="scan-info-box">
             <div className="scan-title">
               <h2>Scan Today</h2>
               <p onClick={toggleShowActualNumbers}>
@@ -293,7 +293,7 @@ const Scan = () => {
                 <strong>{showActualNumbers || userTotalScans <= threshold ? userTotalScans : '500+'}</strong>
               </p>
             </div>
-          </div>
+          </div> */}
           <div className="scan-info-box">
             <div className="scan-title">
               <h2>Current Date/Time</h2>
