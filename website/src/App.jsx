@@ -55,7 +55,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const hiddenNavbarRoutes = ['/', '/signup', '/forgot-password',location.pathname.startsWith('/update/','/edit-disease')];
+    const hiddenNavbarRoutes = ['/', '/signup', location.pathname.startsWith('/update/','/edit-disease')];
     if (hiddenNavbarRoutes.some(route => location.pathname === route)) {
       document.body.classList.add('authBackground');
     } else {

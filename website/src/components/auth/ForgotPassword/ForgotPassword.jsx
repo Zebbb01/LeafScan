@@ -18,37 +18,42 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({}); // Clear previous errors before validation
-
+  
     if (!email.trim()) {
       setErrors({ email: "Email is required." });
       return;
     }
-
+  
     if (!validateEmail(email)) {
       setErrors({ email: "Invalid email format." });
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/forgot_password`, { email });
-
-      if (response.data.status === 'success') {
+  
+      // Ensure that the backend returns the expected success status
+      if (response.data && response.data.status === 'success') {
         toast.success('Reset link sent to your email!', {
           position: "top-center",
           autoClose: 2000,
           transition: Zoom,
         });
       } else {
-        toast.error(response.data.error || 'Something went wrong.');
+        // Ensure we're correctly handling any non-success responses
+        toast.error(response.data?.error || 'Something went wrong.');
       }
     } catch (error) {
+      // Handle errors from axios, such as network issues or server errors
+      console.error(error);
       toast.error(error.response?.data?.error || 'Failed to send reset link.');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="forgot-password-container">
