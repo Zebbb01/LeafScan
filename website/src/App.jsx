@@ -14,9 +14,9 @@ const About = React.lazy(() => import('./components/About/About'));
 const Contact = React.lazy(() => import('./components/Contact/Contact'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
 const VideoPlayer = React.lazy(() => import('./components/VideoPlayer/VideoPlayer'));
-const SignUp = React.lazy(() => import('./components/SignUp/SignUp'));
-const Login = React.lazy(() => import('./components/Login/Login'));
-const UpdateProfile = React.lazy(() => import('./components/UpdateProfile/UpdateProfile'));
+const SignUp = React.lazy(() => import('./components/auth/SignUp/SignUp'));
+const Login = React.lazy(() => import('./components/auth/Login/Login'));
+const UpdateProfile = React.lazy(() => import('./components/auth/UpdateProfile/UpdateProfile'));
 const Scan = React.lazy(() => import('./components/Scan/Scan'));
 const EditDisease = React.lazy(() => import('./components/Scan/EditDisease'));
 const Forecast = React.lazy(() => import('./components/Forecast/ForecastLine'));
@@ -98,6 +98,7 @@ const App = () => {
             element={user ? <Navigate to="/home" /> : <Login setUser={setUser} />}
           />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/update/:id' element={<UpdateProfile setUser={setUser} />} />
           <Route path='/edit-disease' element={<EditDisease />} />
           <Route

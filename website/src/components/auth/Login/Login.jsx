@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/logo.png';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../../Spinner/Spinner';
 
 const Login = ({ setUser }) => {
   const navigate = useNavigate();
@@ -112,6 +112,10 @@ const Login = ({ setUser }) => {
                 />
               </div>
               {errors.password && <span>{errors.password}</span>}
+                {/* Forgot Password Link */}
+              <div className="forgot-password">
+                <Link to="/forgot-password">Forgot Password?</Link>
+              </div>
               <button type='submit' className='btn'>Login</button>
             </div>
             <div className='login'>
