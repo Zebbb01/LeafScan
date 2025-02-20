@@ -12,6 +12,13 @@ const preventionData = {
   "VSD": "Prune affected branches and apply fungicide sprays regularly."
 }
 
+const images = {
+  "Leaf Spot": collection_1,
+  "Early Blight": collection_2,
+  "Late Blight": collection_3,
+  "VSD": collection_4
+}
+
 const Collections = () => {
   const [selectedDisease, setSelectedDisease] = useState(null)
 
@@ -51,6 +58,7 @@ const Collections = () => {
           <div className="modal-overlay" onClick={handleClose}></div>
           <div className="modal-content">
             <h1>{selectedDisease}</h1>
+            <img src={images[selectedDisease]} alt={selectedDisease} className="modal-image" />
             <h3>Prevention</h3>
             <p>{preventionData[selectedDisease]}</p>
             <button className="modal-close-button" onClick={handleClose}>Close</button>

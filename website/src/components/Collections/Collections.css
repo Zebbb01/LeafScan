@@ -1,24 +1,35 @@
+/* Collections Section */
 .collections {
     margin: 80px auto;
     width: 70%;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
-}
-
-.collection img {
-    padding: 10px;
-    width: 100%;
-    border-radius: 15px;
-    display: block;
-}
-
-.collection {
-    flex-basis: 31%;
+    gap: 20px;
+  }
+  
+  .collection {
     position: relative;
-}
-
-.caption {
+    flex-basis: 30%;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .collection:hover {
+    transform: scale(1.05);
+  }
+  
+  .collection img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .caption {
     text-align: center;
     border-radius: 10px;
     position: absolute;
@@ -26,29 +37,31 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0, 15, 152, 0.3);
+    background: rgba(0, 15, 152, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    color: #fff;
-    cursor: pointer;
+    color: white;
     opacity: 0;
     padding-top: 70%;
-    transition: 0.4s;
-}
-
-.caption p {
-    font-size: 35px;
-}
-
-.collection:hover .caption {
+    transition: opacity 0.4s, padding-top 0.4s ease-in-out;
+  }
+  
+  .caption p {
+    font-size: 28px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  
+  .collection:hover .caption {
     opacity: 1;
     padding-top: 0;
-}
-
-/* Modal styles */
-.modal {
+  }
+  
+  /* Modal Styles */
+  .modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -58,66 +71,108 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-}
-
-.modal h1 {
-    color: yellowgreen;
-}
-
-.modal h3 {
-    color: #3f94f0;
-}
-
-.modal-overlay {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .modal-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     cursor: pointer;
-}
-
-.modal-content {
+  }
+  
+  .modal-content {
     position: relative;
     background: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 30px;
+    border-radius: 15px;
     z-index: 1001;
-    max-width: 500px;
+    max-width: 600px;
     width: 80%;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.modal-close-button {
-    margin-top: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    animation: modalContentFadeIn 0.4s ease-out;
+  }
+  
+  .modal h1 {
+    color: #4CAF50;
+    font-size: 32px;
+  }
+  
+  .modal h3 {
+    color: #3f94f0;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .modal p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .modal-close-button {
     padding: 10px 20px;
     border: none;
-    background-color: yellowgreen;
+    background-color: #4CAF50;
     color: white;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-.modal-close-button:hover {
+  }
+  
+  .modal-close-button:hover {
     background-color: #3f94f0;
-}
-
-/* ----- media queries to become responsive ----- */
-@media (max-width: 900px) {
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes modalContentFadeIn {
+    0% {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Media Queries */
+  @media (max-width: 900px) {
     .caption p {
-        font-size: 25px;
+      font-size: 20px;
     }
-}
-@media (max-width: 650px) {
+  
+    .modal h1 {
+      font-size: 28px;
+    }
+  
+    .modal h3 {
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 650px) {
     .collections {
-        flex-direction: column;
+      flex-direction: column;
+      width: 90%;
     }
+  
     .collection {
-        flex-basis: 100%;
-        margin: 20px 0;
+      flex-basis: 100%;
     }
-}
+  }
+  

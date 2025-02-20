@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SpinnerScan from "../Spinner/SpinnerScan";
 
 const EditDisease = () => {
   const [diseases, setDiseases] = useState([]);
@@ -115,7 +116,9 @@ const EditDisease = () => {
     navigate('/home'); // Navigate to home page on cancel
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) {
+    return <SpinnerScan />;
+  }
 
   return (
     <>
