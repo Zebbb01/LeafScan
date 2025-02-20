@@ -312,15 +312,10 @@ const Scan = () => {
                 <p>{contributingFactors || 'No contributing factors information available.'}</p>
                 <h3>Prevention</h3>
                 <p>{prevention || 'No prevention information available.'}</p>
-                {moreInfoUrl && moreInfoUrl.trim() ? (
+                {disease && disease !== 'N/A' && disease !== 'Unrecognize' && moreInfoUrl && moreInfoUrl.trim() && (
                   <>
                     <h4>More Info</h4>
                     <a onClick={handleMoreInfo} className="more-info-link">Click here for more information</a>
-                  </>
-                ) : (
-                  <>
-                    <h4>More Info</h4>
-                    <p className="no-info-text">No additional information available.</p>
                   </>
                 )}
               </div>
