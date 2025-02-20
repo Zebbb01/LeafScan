@@ -16,6 +16,7 @@ const Footer = React.lazy(() => import('./components/Footer/Footer'));
 const VideoPlayer = React.lazy(() => import('./components/VideoPlayer/VideoPlayer'));
 const SignUp = React.lazy(() => import('./components/auth/SignUp/SignUp'));
 const Login = React.lazy(() => import('./components/auth/Login/Login'));
+const ForgotPassword = React.lazy(() => import('./components/auth/ForgotPassword/ForgotPassword'));
 const UpdateProfile = React.lazy(() => import('./components/auth/UpdateProfile/UpdateProfile'));
 const Scan = React.lazy(() => import('./components/Scan/Scan'));
 const EditDisease = React.lazy(() => import('./components/Scan/EditDisease'));
