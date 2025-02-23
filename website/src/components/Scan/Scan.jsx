@@ -269,28 +269,11 @@ const Scan = () => {
               )}
             </div>
           )}
-
           <div className="scan-info-box">
             <div className="scan-title">
               <h2>Total Scans</h2>
               <p onClick={toggleShowActualNumbers}>
                 <strong>{showActualNumbers || totalScans <= threshold ? totalScans : '500+'}</strong>
-              </p>
-            </div>
-          </div>
-          <div className="scan-info-box">
-            <div className="scan-title">
-              <h2>Scan Today</h2>
-              <p onClick={toggleShowActualNumbers}>
-                <strong>{showActualNumbers || scansToday <= threshold ? scansToday : '500+'}</strong>
-              </p>
-            </div>
-          </div>
-          <div className="scan-info-box">
-            <div className="scan-title">
-              <h2>Your Total Scan</h2>
-              <p onClick={toggleShowActualNumbers}>
-                <strong>{showActualNumbers || userTotalScans <= threshold ? userTotalScans : '500+'}</strong>
               </p>
             </div>
           </div>

@@ -533,7 +533,7 @@
   .scan-info-box {
     max-width: 100%; /* Make boxes take full width on smaller screens */
     padding: 15px;
-    width: 130%;
+    width: 80%;
     cursor: pointer;
   }
 
@@ -547,7 +547,7 @@
     max-width: 100%; /* Make boxes take full width on smaller screens */
     padding: 15px;
     padding-right: 30px;
-    width: 130%;
+    width: 80%;
     cursor: pointer;
   }
 
